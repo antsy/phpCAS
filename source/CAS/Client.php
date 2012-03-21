@@ -1677,7 +1677,6 @@ class CAS_Client
                 $this, 'CAS 1.0 ticket not validated', $validate_url,
                 true/*$no_response*/
             );
-            $result = false;
         }
 
         if (preg_match('/^no\n/', $text_response)) {
@@ -1686,14 +1685,12 @@ class CAS_Client
                 $this, 'ST not validated', $validate_url, false/*$no_response*/,
                 false/*$bad_response*/, $text_response
             );
-            $result = false;
         } else if (!preg_match('/^yes\n/', $text_response)) {
             phpCAS::trace('ill-formed response');
             throw new CAS_AuthenticationException(
                 $this, 'Ticket not validated', $validate_url,
                 false/*$no_response*/, true/*$bad_response*/, $text_response
             );
-            $result = false;
         }
         // ticket has been validated, extract the user name
         $arr = preg_split('/\n/', $text_response);
